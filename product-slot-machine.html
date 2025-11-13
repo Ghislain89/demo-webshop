@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lucky Slot Machine - Fruit Shop</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header role="banner">
+      <div class="header-center">
+        <a href="index.html" class="logo" aria-label="Go to homepage">
+          <img
+            src="img/fruit-shop-logo.png"
+            class="logo-img"
+            alt="Fruit Shop Logo"
+          />
+          <span class="products-text"> View Products </span>
+        </a>
+        <nav role="navigation" aria-label="Main navigation">
+          <a
+            href="basket.html"
+            class="basket-link"
+            aria-label="View shopping basket"
+          >
+            <img
+              src="img/basket-icon.png"
+              class="basket-img"
+              alt="Shopping basket icon"
+            />
+            <span class="basket-text">View shopping basket</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content" role="main">
+      <div class="content-box">
+        <div class="emoji-display" role="img" aria-label="Slot machine emoji">🎰</div>
+        <h1>Lucky Slot Machine</h1>
+        <div class="product-desc" aria-label="Product description">
+          Try your luck! Spin the slot machine to get a random fruit.
+        </div>
+        <div class="slot-machine-container">
+          <div class="slot-reel" id="slotReel">
+            <div class="reel-item">🍏</div>
+            <div class="reel-item">🍌</div>
+            <div class="reel-item">🍋</div>
+            <div class="reel-item">🍏</div>
+            <div class="reel-item">🍌</div>
+            <div class="reel-item">🍋</div>
+          </div>
+          <div class="result-window"></div>
+        </div>
+        <div id="selectedFruit" class="selected-fruit"></div>
+        <div class="button-container">
+          <button
+            id="addToBasket"
+            class="cart-action-btn"
+            aria-label="Spin and add random fruit to basket"
+          >
+            Add to Basket
+          </button>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <a
+        href="https://www.linkedin.com/in/timlolkema/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        By Tim Lolkema
+      </a>
+    </footer>
+    <script src="shop.js"></script>
+    <script>
+      let isSpinning = false;
+
+      document.getElementById("addToBasket").onclick = function () {
+        if (isSpinning) return;
+        spinAndAddToBasket();
+      };
+
+      function spinAndAddToBasket() {
+        isSpinning = true;
+        const reel = document.getElementById("slotReel");
+        const selectedFruitDiv = document.getElementById("selectedFruit");
+        const button = document.getElementById("addToBasket");
+
+        // Reset
+        reel.style.transform = "translateY(0)";
+        selectedFruitDiv.textContent = "";
+        button.disabled = true;
+
+        // Generate random fruit: apple=0, banana=1, lemon=2
+        const fruits = ["apple", "banana", "lemon"];
+        const randomFruit = fruits[Math.floor(Math.random() * 3)];
+        const fruitData = PRODUCTS[randomFruit];
+
+        // Calculate final position (3 items per fruit, item height is 80px)
+        const itemHeight = 80;
+        const randomIndex = Math.floor(Math.random() * 3);
+        const finalPosition = itemHeight * 3 + randomIndex * itemHeight; // Add extra rotations
+
+        // Trigger spin animation
+        reel.style.transition = "transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        reel.style.transform = `translateY(-${finalPosition}px)`;
+
+        // After animation completes
+        setTimeout(function () {
+          selectedFruitDiv.textContent = `You got: ${fruitData.emoji} ${fruitData.name}`;
+          addToBasket(randomFruit);
+          button.disabled = false;
+          isSpinning = false;
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
