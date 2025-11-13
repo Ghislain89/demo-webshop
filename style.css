@@ -353,3 +353,53 @@ footer a {
   color: green;
   margin-top: 1rem;
 }
+
+.slot-machine-container {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border: 5px solid #222;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.result-window {
+  position: absolute;
+  width: 100%;
+  height: 90px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #222;
+  border-bottom: 3px solid #222;
+  pointer-events: none;
+}
+
+.slot-reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reel-item {
+  font-size: 3rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+}
+
+.selected-fruit {
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  color: #111;
+  min-height: 1.5rem;
+}
